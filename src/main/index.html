@@ -35,22 +35,22 @@
 
 <div class="main-screen">
 
-
     <div class="top-containers">
         <div class="profile-container">
 
             <div class="p-top-cont">
                 <div class="head"></div>
                 <div class="p-label-container">
-                    <div class="p-label">VeryLongNickname</div>
+                    <div class="p-label" id="user-badge">Dodaj konto</div>
                 </div>
             </div>
             <div class="p-bottom-cont">
-                <div class="p-list-container">
-                    <div class="p-list-element">VeryLongNickname</div>
-                    <div class="p-list-element">VeryLongNickname</div>
-                    <div class="p-list-element">VeryLongNickname</div>
-                </div>
+                <ul class="p-list-container">
+                    <li class="p-list-element p-add-account" id="p-add-account">Dodaj nowe konto</li>
+                    <span class="p-element-container">
+                        <!-- Username history -->
+                    </span>
+                </ul>
             </div>
 
 
@@ -70,7 +70,7 @@
             </div>
             <div class="players">
                 <p class="dcrfticon">
-                    <img class="dcrfticonimage" width="128" height="128" src="../../res/dcl4it.png">
+                    <img class="dcrfticonimage" width="256" height="256" src="../../res/dcl4it.png" alt="?">
                 </p>
                 <p class="dcrftdesc" id="rest"></p>
             </div>
@@ -78,8 +78,118 @@
     </div>
 
 
+    <div class="play-container">
+        <div class="ls-loading-bar-cont" id="ls-loading-bar-cont">
+            <div class="ls-loading-bar" id="ls-loading-bar"></div>
+        </div>
+        <div class="play">Rozpocznij przygodę</div>
+    </div>
+
+    <div class="menu-container">
+        <div class="menu-trigger hidden">
+            <div class="menu-list-container">
+                <div class="menu-list-item">Version 1.0</div>
+                <div class="menu-list-item">Version 1.1</div>
+                <div class="menu-list-item">Version 1.2</div>
+                <div class="menu-list-item">Version 1.3</div>
+                <div class="menu-list-item">Version 1.4</div>
+                <div class="menu-list-item">Version 1.5</div>
+                <div class="menu-list-item">Version 1.6</div>
+                <div class="menu-list-item">Version 1.7</div>
+                <div class="menu-list-item">Version 1.8</div>
+                <div class="menu-list-item">Version 1.8</div>
+                <div class="menu-list-item">Version 1.8</div>
+                <div class="menu-list-item">Version 1.8</div>
+                <div class="menu-list-item">Version 1.8</div>
+                <div class="menu-list-item">Version 1.8</div>
+                <div class="menu-list-item">Version 1.8</div>
+            </div>
+            <div class="menu-footer">
+                <label><input type="checkbox" onclick="filterVersions('beta')"> Beta</label>
+                <label><input type="checkbox" onclick="filterVersions('alpha')"> Alpha</label>
+                <label><input type="checkbox" onclick="filterVersions('snapshot')"> Snapshot</label>
+            </div>
+        </div>
+        <div class="menu-header">
+            <div class="menu-label-container">
+                <img class="menu-avatar" src="../../res/grass.png" alt="?">
+                <div class="menu-label">Minecraft 1.8 fabric-mc1.20.6+0.111.12</div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
+
+<div class="settings-screen">
+    <div class="settings-title">Ustawienia</div>
+
+    <div class="settings-list">
+        <div class="setting launcher-behaviour-setting">
+            <label for="launcher-behaviour">Zachowanie launchera</label>
+            <select class="settings-button" id="launcher-behaviour">
+                <option value="close">Zamknij po uruchomieniu</option>
+                <option value="dont-close">Nie zamykaj</option>
+                <option value="hide">Ukryj na czas gry</option>
+            </select>
+        </div>
+        <div class="setting ram-setting">
+
+            <div class="ram-container">
+                <label for="ram-min">Minimalny RAM</label>
+                <div class="ram-sliders">
+                    <input class="settings-button" type="range" id="ram-min" name="ram-min" min="1" max="16">
+                    <span id="ram-min-value">1GB</span>
+                </div>
+
+                <label for="ram-max">Maksymalny RAM</label>
+                <div class="ram-sliders">
+                    <input class="settings-button" type="range" id="ram-max" name="ram-max" min="1" max="32">
+                    <span id="ram-max-value">4GB</span></div>
+            </div>
+        </div>
+
+        <div class="setting java-setting">
+            <label for="java-path">Java (dla zaawansowanych użytkowników)</label>
+            <div class="java-buttons">
+                <button class="btn java-btn apply-btn" type="button" id="browse-java">Wybierz</button>
+                <button class="btn java-btn cancel-btn" type="button" id="reset-java">Resetuj</button>
+                <span id="java-path">Domyślna</span>
+            </div>
+        </div>
+    </div>
+    <div class="settings-buttons footer-buttons">
+        <button type="button" class="btn settings-btn apply-btn" id="apply-settings">Zastosuj</button>
+        <button type="button" class="btn settings-btn cancel-btn close-btn" id="close-settings">Anuluj</button>
+    </div>
+
+</div>
+
+
+<div class="login-screen">
+    <div class="login-title">Dodaj konto</div>
+
+    <div class="login-container">
+        <div class="login-auth-container">
+
+            <div class="login-ms login-auth-btn">Zaloguj do Microsoft</div>
+            <div class="login-or">lub</div>
+
+            <div class="offline-container">
+                <input class="login-offline login-auth-btn" id="login-offline" placeholder="Wprowadź nick">
+                <button type="button" class="btn login-btn offline-login-btn" id="apply-offline"><i
+                        class="fas fa-check"></i></button>
+            </div>
+
+        </div>
+
+        <div class="login-buttons footer-buttons">
+            <button type="button" class="btn login-btn cancel-btn close-btn" id="close-login">Anuluj</button>
+        </div>
+    </div>
+
+</div>
 
 </body>
 </html>
