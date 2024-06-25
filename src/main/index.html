@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="PL">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src https://sub3.dcrft.pl https://api.minetools.eu">
+
+    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+
+    <title>DragonCraftLauncher</title>
+</head>
+
+<body>
+<script src="renderer.js"></script>
+<script src="index.js"></script>
+
+<div class="tb-container">
+
+    <div class="tb-text"><span class="logo-dragon">dragon</span><span class="logo-craft">craft</span></div>
+    <div class="tb-content">
+        <div class="tb-devtools-cont tb-btn"><i class="fas fa-code"></i></div>
+        <div class="tb-settings-cont tb-btn"><i class="fas fa-cog"></i></div>
+        <div class="tb-close-cont tb-btn"><i class="fas fa-times"></i></div>
+    </div>
+
+</div>
+
+
+<div class="big-logo out">
+    <img class="big-logo logo-image" width="1799" height="1799" src="../../res/dcl4i.png" alt="?">
+</div>
+<div class="loader-background"></div>
+
+<div class="main-screen">
+
+
+    <div class="top-containers">
+        <div class="profile-container">
+
+            <div class="p-top-cont">
+                <div class="head"></div>
+                <div class="p-label-container">
+                    <div class="p-label">VeryLongNickname</div>
+                </div>
+            </div>
+            <div class="p-bottom-cont">
+                <div class="p-list-container">
+                    <div class="p-list-element">VeryLongNickname</div>
+                    <div class="p-list-element">VeryLongNickname</div>
+                    <div class="p-list-element">VeryLongNickname</div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="boxes">
+            <div class="news">
+                <p class="news-icons">
+              <span class="newstypeiconcolor" style="color: darkseagreen;">
+                <b><i class="news-type-icon far fa-newspaper"></i></b></span>&nbsp;<b class="newstype"></b>
+                </p>
+                <p class="news-desc"></p>
+                <p class="news-uploader">
+                    <b><span style="color: red"><i class="fas fa-user-shield"></i>&nbsp;<span
+                            class="newsuploader"></span></span></b>
+                </p>
+            </div>
+            <div class="players">
+                <p class="dcrfticon">
+                    <img class="dcrfticonimage" width="128" height="128" src="../../res/dcl4it.png">
+                </p>
+                <p class="dcrftdesc" id="rest"></p>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>
