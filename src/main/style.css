@@ -198,6 +198,7 @@ body {
     color: #fff;
     font-family: 'TexGyre', serif;
     font-size: 24px;
+    text-shadow: 1px 1px 0 var(--dark-dcrft);
 }
 
 .p-label-container.shown {
@@ -526,7 +527,7 @@ body {
 .menu-label {
     font-size: 18px;
     color: #ffffff;
-    text-transform: uppercase;
+    text-shadow: 1px 1px 0 var(--dark-dcrft);
 }
 
 .menu-trigger {
@@ -576,7 +577,6 @@ body {
     background: linear-gradient(45deg, var(--yellow-dcrft), var(--orange-dcrft));
     border: 5px solid var(--dark-dcrft);
     cursor: pointer;
-    text-transform: uppercase;
     transition: all 0.1s ease-in-out;
 }
 

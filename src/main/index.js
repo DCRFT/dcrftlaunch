@@ -268,12 +268,14 @@ $(document).ready(function () {
 
         nconf.save();
         loadConfig();
+        selectUser(user);
     }
 
     function selectUser(user) {
         nconf.set("profile:current:username", user);
         nconf.save();
         loadUserBadge(user);
+        loadUserList();
         $('.p-top-cont').click();
     }
 
