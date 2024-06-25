@@ -60,7 +60,6 @@ body {
 .tb-container {
     width: 100%;
     display: flex;
-    background-color: var(--background-dark);
     -webkit-app-region: drag;
     z-index: 20;
     cursor: move;
@@ -73,7 +72,7 @@ body {
     padding: 7px 7px 7px 10px;
     font-size: 24px;
     color: white;
-    background: #83370c;
+    background: var(--dark-dcrft);
     font-family: 'TexGyre', serif;
     font-weight: bold;
     text-shadow: 0 0 var(--color-s-gray);
@@ -81,7 +80,7 @@ body {
 
 .tb-content {
     display: flex;
-    background-color: #83370c;
+    background-color: var(--dark-dcrft);
     -webkit-app-region: no-drag;
 }
 
@@ -93,7 +92,7 @@ body {
     justify-content: center;
     align-items: center;
     color: white;
-    background: #83370c;
+    background: var(--dark-dcrft);
     cursor: pointer;
     transition: .15s;
     box-sizing: border-box;
@@ -301,6 +300,7 @@ body {
     max-width: 30vw;
     border: solid 2px var(--dark-dcrft);
     margin-bottom: 10px;
+    box-shadow: 1px 1px 3px #262626;
 }
 
 .news-icons {
@@ -331,6 +331,7 @@ body {
     align-items: center;
     justify-content: center;
     width: fit-content;
+    box-shadow: 1px 1px 3px #262626;
 }
 
 .dcrftdesc {
