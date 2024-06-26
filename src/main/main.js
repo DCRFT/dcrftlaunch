@@ -36,6 +36,10 @@ function createWindow() {
         })).filePaths;
     })
 
+    ipcMain.on('debug', (event, debugText) => {
+        console.log(debugText);
+    });
+
     // Open the DevTools.
     mainWindow.webContents.openDevTools()
 }
