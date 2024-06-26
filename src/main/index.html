@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src https://sub3.dcrft.pl https://api.minetools.eu">
+          content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'unsafe-inline' *">
 
     <link href="style.css" rel="stylesheet">
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
@@ -79,35 +79,28 @@
 
 
     <div class="play-container">
-        <div class="ls-loading-bar-cont" id="ls-loading-bar-cont">
-            <div class="ls-loading-bar" id="ls-loading-bar"></div>
+        <div class="play-disabler">
+            <div class="play">Rozpocznij przygodę</div>
         </div>
-        <div class="play">Rozpocznij przygodę</div>
+
+        <div class="loading-cont">
+            <div class="ls-loading-bar-cont" id="ls-loading-bar-cont">
+                <div class="ls-loading-bar" id="ls-loading-bar"></div>
+            </div>
+            <div class="loading-label" id="loading-label"></div>
+        </div>
+
     </div>
 
     <div class="menu-container">
         <div class="menu-trigger hidden">
-            <div class="menu-list-container">
-                <div class="menu-list-item">Version 1.0</div>
-                <div class="menu-list-item">Version 1.1</div>
-                <div class="menu-list-item">Version 1.2</div>
-                <div class="menu-list-item">Version 1.3</div>
-                <div class="menu-list-item">Version 1.4</div>
-                <div class="menu-list-item">Version 1.5</div>
-                <div class="menu-list-item">Version 1.6</div>
-                <div class="menu-list-item">Version 1.7</div>
-                <div class="menu-list-item">Version 1.8</div>
-                <div class="menu-list-item">Version 1.8</div>
-                <div class="menu-list-item">Version 1.8</div>
-                <div class="menu-list-item">Version 1.8</div>
-                <div class="menu-list-item">Version 1.8</div>
-                <div class="menu-list-item">Version 1.8</div>
-                <div class="menu-list-item">Version 1.8</div>
+            <div class="menu-list-container" id="menu-list-container">
+                <!--- Version list !--->
             </div>
             <div class="menu-footer">
-                <label><input type="checkbox" onclick="filterVersions('beta')"> Beta</label>
-                <label><input type="checkbox" onclick="filterVersions('alpha')"> Alpha</label>
-                <label><input type="checkbox" onclick="filterVersions('snapshot')"> Snapshot</label>
+                <label><input type="checkbox" id="alpha-filter"> Alpha</label>
+                <label><input type="checkbox" id="beta-filter"> Beta</label>
+                <label><input type="checkbox" id="snapshot-filter"> Snapshot</label>
             </div>
         </div>
         <div class="menu-header">
@@ -139,13 +132,13 @@
             <div class="ram-container">
                 <label for="ram-min">Minimalny RAM</label>
                 <div class="ram-sliders">
-                    <input class="settings-button" type="range" id="ram-min" name="ram-min" min="1" max="16">
+                    <input class="settings-button" type="range" id="ram-min" name="ram-min" min="1" max="16" value="1">
                     <span id="ram-min-value">1GB</span>
                 </div>
 
                 <label for="ram-max">Maksymalny RAM</label>
                 <div class="ram-sliders">
-                    <input class="settings-button" type="range" id="ram-max" name="ram-max" min="1" max="32">
+                    <input class="settings-button" type="range" id="ram-max" name="ram-max" min="1" max="32" value="4">
                     <span id="ram-max-value">4GB</span></div>
             </div>
         </div>
@@ -155,7 +148,7 @@
             <div class="java-buttons">
                 <button class="btn java-btn apply-btn" type="button" id="browse-java">Wybierz</button>
                 <button class="btn java-btn cancel-btn" type="button" id="reset-java">Resetuj</button>
-                <span id="java-path">Domyślna</span>
+                <span id="java-path" data-javapath="">Używasz domyślnej Javy</span>
             </div>
         </div>
     </div>
@@ -173,7 +166,7 @@
     <div class="login-container">
         <div class="login-auth-container">
 
-            <div class="login-ms login-auth-btn">Zaloguj do Microsoft</div>
+            <div class="login-ms login-auth-btn" id="login-ms">Zaloguj do Microsoft</div>
             <div class="login-or">lub</div>
 
             <div class="offline-container">
@@ -189,6 +182,12 @@
         </div>
     </div>
 
+</div>
+
+<div class="error-screen">
+    <div class="error-container">
+        <div class="error-text"></div>
+    </div>
 </div>
 
 </body>
