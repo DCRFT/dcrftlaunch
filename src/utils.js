@@ -32,7 +32,9 @@ function setRPC(state) {
             label: "Pobierz launcher!",
             url: "http://dcrft.pl/launcher"
         }]
-    }).then(r => function () {})
+    }).then(r => function () {}).catch(function (r) {
+        debug("Couldn't update RPC: " + r)
+    });
 }
 
 module.exports = {
