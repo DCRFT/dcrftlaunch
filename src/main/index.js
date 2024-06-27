@@ -209,7 +209,7 @@ $(document).ready(function () {
         let ram = getSettingEntry("ram")
         let javapath = getSettingEntry("javapath")
 
-        checkUserUI(user);
+        if(checkUserUI(user)) return;
 
         debug("Trying to launch game version " + version.id);
         launchGame(user, version, ram, javapath);
@@ -655,7 +655,9 @@ $(document).ready(function () {
                 playButton.removeClass("error");
             }, 500);
             showErrorMessage("Nie utworzono konta!");
+            return true;
         }
+        return false;
     }
 
     function userExists(user) {
