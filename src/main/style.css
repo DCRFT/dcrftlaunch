@@ -64,6 +64,7 @@ body {
     -webkit-app-region: drag;
     z-index: 20;
     cursor: move;
+    background: repeating-linear-gradient(45deg, #775600, #775600 20px, #000000 20px, #000000 40px);  /* DEV VERSION */
 }
 
 .tb-container.background {
@@ -71,13 +72,15 @@ body {
 }
 
 .tb-text {
+    display: flex;
+    align-items: center;
     flex: 1;
     height: 100%;
     box-sizing: border-box;
     padding: 7px 7px 7px 10px;
     font-size: 24px;
     color: white;
-    background: var(--dark-dcrft);
+    /*background: var(--dark-dcrft);*/                                                      /* DEV VERSION */
     font-family: 'TexGyre', serif;
     font-weight: bold;
     text-shadow: 0 0 var(--color-s-gray);
@@ -85,7 +88,7 @@ body {
 
 .tb-content {
     display: flex;
-    background-color: var(--dark-dcrft);
+    /*background-color: var(--dark-dcrft);*/                                              /* DEV VERSION */
     -webkit-app-region: no-drag;
 }
 
@@ -93,11 +96,13 @@ body {
     height: 100%;
     padding: 15px;
     font-size: 20px;
+    font-family: TexGyre, serif;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
-    background: var(--dark-dcrft);
+    /*background: var(--dark-dcrft);*/                                                      /* DEV VERSION */
+    background: transparent;                                                                /* DEV VERSION */
     cursor: pointer;
     transition: .15s;
     box-sizing: border-box;
@@ -163,14 +168,17 @@ body {
 
 
 .head {
-    border-radius: 8px;
+    border-radius: 10px;
     background-size: cover;
-    background-image: url('../../res/steve.png');
     width: 80px;
     height: 80px;
     box-shadow: 0 0 10px black;
     transition: 0.2s ease;
     z-index: 2;
+}
+
+.head.steve {
+    background-image: url('../../res/steve.png') !important;
 }
 
 .head:hover {
@@ -189,7 +197,7 @@ body {
     padding: 20px;
     height: 80px;
     border: 5px solid #512200;
-    border-radius: 8px;
+    border-radius: 10px;
     transition: 0.2s ease;
     background: var(--gradient-dcrft);
     box-shadow: 0 0 10px black;
@@ -214,7 +222,7 @@ body {
 
 .p-element-container {
     max-height: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .p-bottom-cont {
@@ -225,7 +233,7 @@ body {
     background-color: var(--orange-dcrft);
     box-shadow: 0 0 10px black;
     transition: 0.2s ease;
-    border-radius: 8px;
+    border-radius: 10px;
     opacity: 0;
     transform: translateY(-50%);
 }
@@ -262,7 +270,7 @@ body {
 }
 
 .p-list-element.p-add-account {
-    border-radius: 8px;
+    border-radius: 10px;
     background: var(--gradient-dcrft);
 }
 
@@ -501,13 +509,12 @@ body {
 .play {
     display: inline-block;
     font-family: 'TexGyre', serif;
-    padding: 20px 40px;
-    font-size: 24px;
+    padding: 25px 45px;
+    font-size: 28px;
     color: #ffffff;
-    text-transform: uppercase;
     background: var(--gradient-dcrft);
     border: 5px solid var(--dark-dcrft);
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
     text-align: center;
     box-shadow: 0 4px #af8000;
@@ -521,7 +528,7 @@ body {
     position: absolute;
     width: calc(100% + 10px);
     height: calc(100% + 10px);
-    border-radius: 8px;
+    border-radius: 10px;
     top: -5px;
     left: -5px;
     z-index: -1;
@@ -551,7 +558,7 @@ body {
 .menu-container.shown {
     z-index: 4;
     background-color: var(--orange-dcrft);
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
 .menu-header {
@@ -561,7 +568,7 @@ body {
     background: var(--gradient-dcrft);
     border: 5px solid var(--dark-dcrft);
     transition: all 0.1s ease-in-out;
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
 .menu-avatar {
@@ -617,7 +624,7 @@ body {
 
 .menu-list-item:hover {
     background: var(--gradient-dcrft);
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
 .menu-footer {
@@ -662,8 +669,10 @@ body {
 .settings-title {
     font-family: 'TexGyre', 'serif';
     color: #fff;
-    font-size: 24px;
+    font-size: 32px;
     padding: 20px;
+    text-align: center;
+    margin-top: 6vw;
 }
 
 .footer-buttons {
@@ -783,8 +792,11 @@ input[type="range"] {
 .login-title {
     font-family: 'TexGyre', 'serif';
     color: #fff;
-    font-size: 24px;
+    font-size: 32px;
     padding: 20px;
+    text-align: center;
+    margin-top: 6vw;
+    margin-bottom: -6vw;
 }
 
 
@@ -839,7 +851,7 @@ input[type="range"] {
     margin: 10px;
     padding: 15px;
     background: var(--gradient-dcrft);
-    border-radius: 8px;
+    border-radius: 10px;
     border: 5px solid var(--dark-dcrft);
 }
 
@@ -849,7 +861,7 @@ input[type="range"] {
 
 .login-btn.offline-login-btn {
     border: 5px solid var(--dark-dcrft);
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 13px;
     font-size: 24px;
     transition: .2s ease-in-out;
@@ -881,7 +893,7 @@ input[type="range"] {
     transform: translate(-50%, -50%);
     background: indianred;
     border: 5px solid var(--dark-dcrft);
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 1px 1px 5px var(--dark-dcrft);
     display: none;
 }

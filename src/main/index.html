@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'unsafe-inline' *">
+          content="default-src 'self' https://mc-heads.net; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'unsafe-inline' *">
 
     <link href="style.css" rel="stylesheet">
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
@@ -20,6 +20,8 @@
 
     <div class="tb-text"><span class="logo-dragon">dragon</span><span class="logo-craft">craft</span></div>
     <div class="tb-content">
+        <div class="tb-version-cont tb-btn">dragoncraft launcher alpha</div>
+        <div class="tb-bug-cont tb-btn"><i class="fa-solid fa-bug"></i></div>
         <div class="tb-devtools-cont tb-btn"><i class="fas fa-code"></i></div>
         <div class="tb-settings-cont tb-btn"><i class="fas fa-cog"></i></div>
         <div class="tb-close-cont tb-btn"><i class="fas fa-times"></i></div>
@@ -39,7 +41,7 @@
         <div class="profile-container">
 
             <div class="p-top-cont">
-                <div class="head"></div>
+                <div class="head steve"></div>
                 <div class="p-label-container">
                     <div class="p-label" id="user-badge">Dodaj konto</div>
                 </div>
@@ -123,7 +125,7 @@
             <label for="launcher-behaviour">Zachowanie launchera</label>
             <select class="settings-button" id="launcher-behaviour">
                 <option value="close">Zamknij po uruchomieniu</option>
-                <option value="dont-close">Nie zamykaj</option>
+                <option value="dont-close">Pozostaw otwarty</option>
                 <option value="hide">Ukryj na czas gry</option>
             </select>
         </div>
@@ -143,6 +145,7 @@
             </div>
         </div>
 
+        <!--
         <div class="setting java-setting">
             <label for="java-path">Java (dla zaawansowanych użytkowników)</label>
             <div class="java-buttons">
@@ -151,6 +154,7 @@
                 <span id="java-path" data-javapath="">Używasz domyślnej Javy</span>
             </div>
         </div>
+        !-->
     </div>
     <div class="settings-buttons footer-buttons">
         <button type="button" class="btn settings-btn apply-btn" id="apply-settings">Zastosuj</button>

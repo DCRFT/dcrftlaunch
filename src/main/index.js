@@ -4,79 +4,20 @@ const utils = require('../utils.js');
 const os = require('os');
 const path = require('node:path')
 const fs = require("node:fs");
-const {debug,setRPC,loadRPC} = require("../utils");
-const newsId = 0;
+const { debug, setRPC, loadRPC} = require("../utils");
 const nconf = require("nconf")
-const { shell } = require('electron');
 const {JavaManager} = require("../../lib/javamgr/index.js");
 
 const {Client, Authenticator} = require('minecraft-launcher-core');
 const launcher = new Client();
-const { Auth } = require("msmc");
+const {Auth, tokenUtils, Minecraft} = require("msmc");
 
 
-// Initialize global variables
+// Global variables
+const newsId = 0;
 let root, config_root, jmgr = null;
 const authManager = new Auth("login");
-
-//                         //
-//      FILE MANAGER       //
-//                         //
-
-function initFiles() {
-    const initPlatform = os.platform();
-    const initUser = os.userInfo().username;
-    switch (initPlatform) {
-        case "win32":
-            root = "C:\\Users\\" + initUser + "\\AppData\\Roaming\\.minecraft";
-            break;
-        case "linux":
-            root = path.join("/home", initUser, ".minecraft");
-            break;
-        case "darwin":
-            root = path.join("/", initUser, "Library", "Application Support", "minecraft");
-            break;
-    }
-
-    config_root = path.join(root, "dcrftlaunch")
-
-    if (!fs.existsSync(root)) fs.mkdirSync(root);
-    if (!fs.existsSync(config_root)) fs.mkdirSync(config_root);
-    if (!fs.existsSync(path.join(config_root, "java"))) fs.mkdirSync(path.join(config_root, "java"));
-    if (!fs.existsSync(path.join(root, "versions"))) fs.mkdirSync(path.join(root, "versions"));
-    if (!fs.existsSync(path.join(root, 'launcher_profiles.json'))) createDummyProfileFile();
-}
-
-function loadJmgr() {
-    jmgr = new JavaManager(path.join(config_root, "java"));
-    jmgr.onProgress((p, t) => showProgress((p / t) * 100, "Pobieram: Java"));
-}
-
-//                         //
-//     PROGRESS MANAGER    //
-//                         //
-
-function showProgress(percentage, label) {
-    const loadingBarCont = $('#ls-loading-bar-cont');
-    const loadingBar = $('#ls-loading-bar');
-    const loadingLabel = $('#loading-label');
-
-    percentage = percentage > 100 ? 100 : percentage;
-
-    loadingBarCont.show();
-    loadingBar.css('width', `${percentage}%`);
-    loadingLabel.text(label);
-}
-
-function hideProgress() {
-    const loadingBarCont = $('#ls-loading-bar-cont');
-    const loadingBar = $('#ls-loading-bar');
-    const loadingLabel = $('#loading-label');
-
-    loadingBarCont.hide();
-    loadingBar.css('width', `0`);
-    loadingLabel.text("");
-}
+const packageJson = require("../../package.json");
 
 
 //                         //
@@ -106,37 +47,26 @@ function logoAnim(time, exit) {
     const bigLogo = $('.big-logo');
     const loader = $('.loader-background');
     const titleBarContainer = $(".tb-container");
-
     setTimeout(function () {
-
-        if(exit) {
+        if (exit) {
             bigLogo.addClass("no-transition");
             loader.addClass("no-transition");
         }
-
         titleBarContainer.addClass("background");
         bigLogo.removeClass("normal").addClass("splash-two");
         loader.removeClass("hidden").addClass("splash");
 
-
-
         setTimeout(function () {
             bigLogo.removeClass("out").addClass("in");
-
-            if(exit) {
+            if (exit) {
                 bigLogo.removeClass("no-transition");
                 loader.removeClass("no-transition");
             }
-
         }, 500)
-
-
-
         setTimeout(function () {
             bigLogo.addClass("normal").removeClass("splash").removeClass("splash-two");
             loader.addClass("hidden");
         }, 750)
-
         setTimeout(function () {
             bigLogo.addClass("drop");
         }, 1150)
@@ -144,13 +74,11 @@ function logoAnim(time, exit) {
             bigLogo.removeClass("drop");
             titleBarContainer.removeClass("background");
         }, 1250)
-
         setTimeout(function () {
             bigLogo.removeClass("in").addClass("out");
         }, 1500)
 
     }, time);
-
 }
 
 $(document).ready(function () {
@@ -181,22 +109,27 @@ $(document).ready(function () {
     const loginMsButton = $("#login-ms");
 
     const userBadge = $("#user-badge");
+    const userBadgeHead = $(".head");
+    const pTopContainer = $(".p-top-cont");
+    const pBottomContainer = $(".p-bottom-cont");
+    const pLabelContainer = $(".p-label-container");
 
-    const playContainer = $(".play-container");
     const playButton = $(".play");
 
     const errorScreen = $(".error-screen");
     const errorText = $(".error-text");
 
-
-    $('.tb-close-cont').click(function () {
-        ipcRenderer.send('close-app');
+    $('.tb-bug-cont').click(function () {
+        require("electron").shell.openExternal(packageJson.bugs.url);
     });
     $('.tb-devtools-cont').click(function () {
         ipcRenderer.send('devtools');
     });
     $('.tb-settings-cont').click(function () {
         showSettings();
+    });
+    $('.tb-close-cont').click(function () {
+        ipcRenderer.send('close-app');
     });
 
     //                         //
@@ -217,46 +150,60 @@ $(document).ready(function () {
             addUser(input, "offline");
             loginWin.hide();
 
-        } else
+        } else {
             showErrorMessage("Podaj poprawny nick.");
             debug("Username wrong: " + input);
-        usernameInput.text("");
+        }
+        usernameInput.val("");
     });
 
-    async function MsLogin() {
-        console.log("Launching MsLogin...");
-        authManager.launch("raw").then(async (xboxManager) => {
-            console.log("Launching authManager...");
-            const token = await xboxManager.getMinecraft();
-            console.log("Fetching Minecraft data...");
-            const data = token.mclc();
-            console.log("Minecraft data fetched");
-        }).catch(e => {
-            console.error("err! " + e)
-        });
-    }
 
     loginMsButton.click(function () {
-        MsLogin().then(r => console.log("something that keeps us going."));
-        // const xbox = await authManager.launch("raw");
-        // const token = await xbox.getMinecraft();
-        // console.error(token);
-        // console.log(token.mclc());
+        ipcRenderer.invoke("mslogin").then(async returnValue => {
+            let mc = await returnValue;
+            if (mc.error) {
+                switch (mc.error) {
+                    case "error.gui.closed": {
+                        showErrorMessage("Anulowano dodawanie konta.");
+                        break;
+                    }
+                    default: {
+                        showErrorMessage("Nie udało się dodać konta Microsoft.");
+                        break;
+                    }
+                }
+                return;
+            }
+            const username = returnValue.mc.name;
+            if (userExists(username)) {
+                debug("Username exists: " + username);
+                showErrorMessage("To konto już jest dodane.");
+                return;
+            } else addUser(username, "microsoft", returnValue);
+            loginWin.hide();
+        });
     });
 
+    pTopContainer.click(function () { toggleUserList(); });
 
-    $('.p-top-cont').click(function () {
-        $('.head').toggleClass('clicked');
-        $(".p-bottom-cont").toggleClass('shown');
-        $(".p-label-container").toggleClass('shown');
+    function toggleUserList() {
+        userBadgeHead.toggleClass('clicked');
+        pBottomContainer.toggleClass('shown');
+        pLabelContainer.toggleClass('shown');
+    }
 
-    });
+    function hideUserList() {
+        userBadgeHead.removeClass('clicked');
+        pBottomContainer.removeClass('shown');
+        pLabelContainer.removeClass('shown');
+    }
+
 
 // TODO ERROR HANDLING
     playButton.click(function () {
         playButton.addClass("hidden");
 
-        let user = getUser();
+        let user = getCurrentUserObj();
         let version = getVersion();
 
         let ram = getSettingEntry("ram")
@@ -269,6 +216,65 @@ $(document).ready(function () {
     });
 
     //                         //
+    //      FILE MANAGER       //
+    //                         //
+
+    function initFiles() {
+        const initPlatform = os.platform();
+        const initUser = os.userInfo().username;
+        switch (initPlatform) {
+            case "win32":
+                root = "C:\\Users\\" + initUser + "\\AppData\\Roaming\\.minecraft";
+                break;
+            case "linux":
+                root = path.join("/home", initUser, ".minecraft");
+                break;
+            case "darwin":
+                root = path.join("/", initUser, "Library", "Application Support", "minecraft");
+                break;
+        }
+
+        config_root = path.join(root, "dcrftlaunch")
+
+        if (!fs.existsSync(root)) fs.mkdirSync(root);
+        if (!fs.existsSync(config_root)) fs.mkdirSync(config_root);
+        if (!fs.existsSync(path.join(config_root, "java"))) fs.mkdirSync(path.join(config_root, "java"));
+        if (!fs.existsSync(path.join(root, "versions"))) fs.mkdirSync(path.join(root, "versions"));
+        if (!fs.existsSync(path.join(root, 'launcher_profiles.json'))) createDummyProfileFile();
+    }
+
+    function loadJmgr() {
+        jmgr = new JavaManager(path.join(config_root, "java"));
+        jmgr.onProgress((p, t) => showProgress((p / t) * 100, "Pobieram: Java"));
+    }
+
+    //                         //
+    //     PROGRESS MANAGER    //
+    //                         //
+
+    function showProgress(percentage, label) {
+        const loadingBarCont = $('#ls-loading-bar-cont');
+        const loadingBar = $('#ls-loading-bar');
+        const loadingLabel = $('#loading-label');
+
+        percentage = percentage > 100 ? 100 : percentage;
+
+        loadingBarCont.show();
+        loadingBar.css('width', `${percentage}%`);
+        loadingLabel.text(label);
+    }
+
+    function hideProgress() {
+        const loadingBarCont = $('#ls-loading-bar-cont');
+        const loadingBar = $('#ls-loading-bar');
+        const loadingLabel = $('#loading-label');
+
+        loadingBarCont.hide();
+        loadingBar.css('width', `0`);
+        loadingLabel.text("");
+    }
+
+    //                         //
     //     SETTINGS MANAGER    //
     //                         //
 
@@ -278,7 +284,7 @@ $(document).ready(function () {
     });
 
     applySettings.click(function () {
-        debug("Trying to save settings...");
+        debug("Saving launcher settings.");
         saveSettings();
         closeButton.click();
     });
@@ -326,6 +332,7 @@ $(document).ready(function () {
     }
 
     function getSettingEntry(entry) {
+        getSettings();
         return nconf.get("settings:" + entry);
     }
 
@@ -339,15 +346,18 @@ $(document).ready(function () {
             javapath: javaPathDisplay.data("javapath")
         };
         nconf.set("settings", settings);
-        saveConfig();
+        nconf.save();
     }
 
     //                         //
-    //       NEWS MANAGER      //
+    //       DCRFT.PL HUD      //
     //                         //
 
     function news(i) {
         const request = new XMLHttpRequest();
+        const newsTypeIcon = $(".newstypeicon")
+        const newsTypeIconColor = $(".newstypeiconcolor");
+
         request.open('GET', 'https://sub3.dcrft.pl/oglapi.php?id=' + i, true);
         request.onload = function () {
             const data = JSON.parse(request.responseText);
@@ -358,15 +368,14 @@ $(document).ready(function () {
                 return (n++ % 2) ? m : '<b>';
             });
             desc = desc.replaceAll('**', '</b>');
-            type = "Ogłoszenie";
-            $(".newstypeicon").removeClass("fa-star").addClass("fa-newspaper");
-            $(".newstypeiconcolor").css("color", "darkseagreen");
+            let type = "Ogłoszenie";
+            newsTypeIcon.removeClass("fa-star").addClass("fa-newspaper");
+            newsTypeIconColor.css("color", "darkseagreen");
             if (data[3] === "1") {
                 type = "Event";
                 $(".news-type-icon").removeClass("fa-newspaper").addClass("fa-star");
-                $(".newstypeiconcolor").css("color", "yellow");
+                newsTypeIconColor.css("color", "yellow");
             }
-
 
             $(".news-desc").html(desc);
             $(".newstype").html(type);
@@ -375,14 +384,17 @@ $(document).ready(function () {
         request.send();
     }
 
-    $.getJSON("https://api.minetools.eu/ping/dcrft.pl", function (r) {
-        if (r.error) {
-            $('#rest').html('offline');
-            return;
-        }
-        $('#rest').html(r.players.online + '/100');
+    function loadServerStatus() {
+        $.getJSON("https://api.minetools.eu/ping/dcrft.pl", function (r) {
+            const rest = $("#rest");
+            if (r.error) {
+                rest.html('offline');
+                return;
+            }
+            rest.html(r.players.online + '/100');
 
-    });
+        });
+    }
 
     //                         //
     //      CONFIG MANAGER     //
@@ -401,18 +413,26 @@ $(document).ready(function () {
     function loadConfig() {
         nconf.file({file: path.join(config_root, 'dcrftlaunch.json')});
         nconf.load();
-        saveConfig();
+        nconf.save();
     }
 
     //                         //
     //     VERSION MANAGER     //
     //                         //
 
-    versionMenuButton.click(function () {
+    versionMenuButton.click(function () { toggleVersionList(); });
+
+    function hideVersionList() {
+        versionList.addClass("hidden");
+        versionMenuContainer.removeClass("shown");
+        versionMenuListContainer.hide();
+    }
+
+    function toggleVersionList() {
         versionList.toggleClass("hidden");
         versionMenuContainer.toggleClass("shown");
         versionMenuListContainer.toggle();
-    });
+    }
 
     function getVersion() {
         return nconf.get("version");
@@ -487,7 +507,6 @@ $(document).ready(function () {
                         if (path.extname(json) === ".json") {
                             $.getJSON(path.join(dir, file, json), function (data) {
                                 if ((data.mainClass !== "net.minecraft.client.main.Main" && data.mainClass !== "net.minecraft.launchwrapper.Launch" && data.mainClass != null)) vList.push(data);
-                                debug("Found custom json: " + file)
                             });
                         }
                     });
@@ -499,9 +518,10 @@ $(document).ready(function () {
             let custom = false;
             let inh = null;
             if ((y.inheritsFrom != null && y.assets != null) || (y.mainClass !== "net.minecraft.client.main.Main" && y.mainClass !== "net.minecraft.launchwrapper.Launch" && y.mainClass != null)) {
-                if(y.type !== "old_alpha" && y.type !== "old_beta") {
+                if (y.type !== "old_alpha" && y.type !== "old_beta") {
                     custom = true
                     inh = y.inheritsFrom;
+                    debug("Found custom json: " + y.id)
                 }
             }
             let verid;
@@ -527,14 +547,29 @@ $(document).ready(function () {
     //     USER MANAGER        //
     //                         //
 
+    async function tryRefreshToken(userObj) {
+        debug("Trying to refresh user token...");
+        const xboxManager = await authManager.refresh(userObj.auth.token.parent.msToken);
+        const token = await xboxManager.getMinecraft();
+        let auth = {
+            token: token,
+            mc: token.mclc()
+        };
+        nconf.set("profile:current:auth", auth);
+        nconf.set("profile:history:" + userObj.username + ":auth", auth);
+        debug("User token refreshed!");
+        saveConfig();
+    }
+
     function addUser(user, type, auth) {
         nconf.set("profile:current:username", user);
         nconf.set("profile:current:type", type);
+        if (auth) nconf.set("profile:current:auth", auth);
 
         let history = getHistory();
 
         if (history[user] === undefined) {
-            history[user] = {type: type};
+            history[user] = {username: user, type: type};
             if (auth) history[user].auth = auth;
         }
 
@@ -543,19 +578,27 @@ $(document).ready(function () {
 
         nconf.save();
         loadConfig();
-        selectUser(user);
+        selectUser(user, true);
     }
 
-    function selectUser(user) {
-        nconf.set("profile:current:username", user);
+    function removeUser(username) {
+        // TODO
+    }
+
+    function selectUser(user, click) {
+        const userFromHistory = getUserFromHistory(user)
+        nconf.set("profile:current", userFromHistory);
+        if (userFromHistory.auth) tryRefreshToken(userFromHistory);
         nconf.save();
-        loadUserBadge(user);
+        loadUserBadge(userFromHistory);
         loadUserList();
-        $('.p-top-cont').click();
+        if (click) $('.p-top-cont').click();
     }
 
     function loadUserBadge(user) {
-        userBadge.text(user);
+        userBadge.text(user.username);
+        if (user.auth !== undefined) userBadgeHead.css("background-image", "url('https://mc-heads.net/avatar/" + user.auth.token.profile.id + "')").removeClass("steve");
+        else userBadgeHead.addClass("steve");
     }
 
     function getHistory() {
@@ -564,12 +607,18 @@ $(document).ready(function () {
         return history;
     }
 
+    function getUserFromHistory(user) {
+        let userFromHistory = nconf.get("profile:history:" + user);
+        if (userFromHistory === undefined) userFromHistory = {};
+        return userFromHistory;
+    }
+
     function addUserListHandler() {
         const userSelectElement = $("li.user-p-list-element");
         userSelectElement.click(function () {
             let user = $(this).text();
             debug("Selected user: " + user);
-            selectUser(user);
+            selectUser(user, true);
         })
     }
 
@@ -586,19 +635,25 @@ $(document).ready(function () {
 
     }
 
-    function getUser() {
+    function getCurrentUserName() {
         return nconf.get("profile:current:username");
+    }
+
+    function getCurrentUserObj() {
+        return nconf.get("profile:current");
     }
 
     function validateUser(user) {
         return user === undefined ? false : /^\w{3,16}$/i.test(user);
     }
 
-    function checkUserUI(user){
-        if(user == null) {
+    function checkUserUI(user) {
+        if (user == null) {
             playButton.addClass("error");
             playButton.removeClass("hidden");
-            setTimeout(function () { playButton.removeClass("error"); },500);
+            setTimeout(function () {
+                playButton.removeClass("error");
+            }, 500);
             showErrorMessage("Nie utworzono konta!");
         }
     }
@@ -609,77 +664,75 @@ $(document).ready(function () {
     }
 
     //                         //
-    //          ERRORS         //
-    //                         //
-
-    function showErrorMessage(text) {
-        errorScreen.show();
-        errorText.text(text);
-
-        setTimeout(function () {
-            errorScreen.fadeOut();
-        },1500);
-    }
-
-    //                         //
     //          LAUNCH         //
     //                         //
 
     function launchGame(user, version, ram, javapath) {
 
+        hideVersionList();
+        hideUserList();
+
         const jmgrVer = /[a-zA-Z]/.test(version.verid) ? "1.5" : version.verid + "";
 
         (async () => {
             let opts = {
-                authorization: Authenticator.getAuth(user),
+                authorization: Authenticator.getAuth(user.username),
                 root: root,
                 version: {
                     number: version.id + "",
                     type: version.type
                 },
                 memory: {
-                    min: ram.min + "G",
-                    max: ram.max + "G"
+                    min: getSettingEntry("ram:min") + "G",
+                    max: getSettingEntry("ram:max") + "G"
                 },
                 javaPath: await jmgr.use(jmgrVer),
             }
 
-            if(version.custom != null) {
+            if (version.custom != null) {
                 opts.version.custom = version.id + "";
                 opts.version.number = version.verid + "";
             }
 
-            debug("Options are set: "); console.log(opts);
+            if (user.auth) opts.authorization = user.auth.mc;
+
+            debug("Options are set.");
             launcher.launch(opts);
 
             launcher.on('data', (e) => console.log(e));
 
             launcher.on('progress', (e) => {
                 let progress = (e.task / e.total) * 100;
-                if(progress < 100) showProgress(progress, "Ładowanie gry");
-                else setTimeout(function() { hideProgress()}, 1500 );
+                if (progress < 100) showProgress(progress, "Ładowanie gry");
+                else setTimeout(function () {
+                    hideProgress()
+                }, 1500);
             });
 
             launcher.on('arguments', (args) => {
                 setRPC("Minecraft " + opts.version.number + "");
+                ipcRenderer.send('toggleLauncher', getSettingEntry("behaviour"));
             });
 
             launcher.on('close', (e) => {
+                logoAnim(0, true);
                 hideProgress();
                 playButton.removeClass("hidden");
-                logoAnim(0, true);
                 setRPC("W menu");
                 debug("Game exited.")
+                ipcRenderer.send('toggleLauncher', "show");
             });
 
             launcher.on('debug', (e) => {
                 console.log(e);
-                if(e.includes("MCLC]: Failed to start due to")) {
+                if (e.includes("MCLC]: Failed to start due to")) {
                     hideProgress();
                     playButton.removeClass("hidden");
                     logoAnim(0, true);
                     debug("Exited with error.")
-                    setTimeout(function() { showErrorMessage("Wystąpił błąd przy uruchamianiu gry.") },1000);
+                    setTimeout(function () {
+                        showErrorMessage("Wystąpił błąd przy uruchamianiu gry.")
+                    }, 1000);
                 }
             });
 
@@ -689,28 +742,52 @@ $(document).ready(function () {
 
 
     //                         //
+    //          MISC           //
+    //                         //
+
+    function loadLauncherVersion() {
+        const launcherVerCont = $(".tb-version-cont");
+        launcherVerCont.text(launcherVerCont.text() + " " + packageJson.version);
+    }
+
+    function showErrorMessage(text) {
+        errorScreen.show();
+        errorText.text(text);
+
+        setTimeout(function () {
+            errorScreen.fadeOut();
+        }, 1500);
+    }
+
+    //                         //
+    //          INIT           //
+    //                         //
+
+    function launcherInit() {
+        loadLauncherVersion();
+        loadRPC();
+        initFiles();
+        loadConfig();
+
+        if (getCurrentUserObj() !== undefined) {
+            selectUser(getCurrentUserName(), false);
+            loadUserBadge(getCurrentUserObj());
+            loadUserList();
+        }
+
+        loadVersionList();
+        loadVersionBadge();
+        loadJmgr();
+        news(newsId);
+        loadServerStatus();
+        logoAnim(300, false);
+    }
+
+    //                         //
     //          LOGIC          //
     //                         //
 
-    loadRPC();
-
-    initFiles();
-    loadConfig();
-
-    if (!(getUser() === undefined)) {
-        loadUserBadge(getUser());
-        loadUserList();
-    }
-
-    loadVersionList();
-    loadVersionBadge();
-
-    loadJmgr();
-
-    debug("Validating username result: " + validateUser(getUser))
-
-    news(newsId);
-    logoAnim(0, false);
+    launcherInit();
 
 });
 
