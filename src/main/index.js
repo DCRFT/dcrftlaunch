@@ -10,7 +10,7 @@ const {JavaManager} = require("../../lib/javamgr/index.js");
 
 const {Client, Authenticator} = require('minecraft-launcher-core');
 const launcher = new Client();
-const {Auth, tokenUtils, Minecraft} = require("msmc");
+const {Auth} = require("msmc");
 
 
 // Global variables
@@ -364,7 +364,7 @@ $(document).ready(function () {
             if (request.status < 200 || request.status > 400) utils.debug("Error loading news. HTTP status: " + request.status);
             let desc = data[0];
             let n = 0;
-            desc = desc.replace('**', (m, i, og) => {
+            desc = desc.replace('**', (m) => {
                 return (n++ % 2) ? m : '<b>';
             });
             desc = desc.replaceAll('**', '</b>');
@@ -401,8 +401,8 @@ $(document).ready(function () {
     //                         //
 
     function saveConfig() {
-        nconf.save(function (err) {
-            fs.readFile(path.join(config_root, 'dcrftlaunch.json'), function (err, data) {
+        nconf.save(function () {
+            fs.readFile(path.join(config_root, 'dcrftlaunch.json'), function (err) {
                 err = err == null ? "ok" : err;
                 debug("Config saving: " + err);
             });
@@ -628,7 +628,7 @@ $(document).ready(function () {
 
         container.empty();
 
-        $.each(history, function (user, details) {
+        $.each(history, function (user) {
             container.append(`<li class="p-list-element user-p-list-element">${user}</li>`);
         });
         addUserListHandler();
@@ -669,6 +669,7 @@ $(document).ready(function () {
 
     function launchGame(user, version, ram, javapath) {
 
+        // TODO investiage 'ram' argument
         hideVersionList();
         hideUserList();
 
@@ -709,12 +710,12 @@ $(document).ready(function () {
                 }, 1500);
             });
 
-            launcher.on('arguments', (args) => {
+            launcher.on('arguments', () => {
                 setRPC("Minecraft " + opts.version.number + "");
                 ipcRenderer.send('toggleLauncher', getSettingEntry("behaviour"));
             });
 
-            launcher.on('close', (e) => {
+            launcher.on('close', () => {
                 logoAnim(0, true);
                 hideProgress();
                 playButton.removeClass("hidden");
