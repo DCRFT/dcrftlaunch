@@ -1,6 +1,5 @@
 const {ipcRenderer, shell} = require('electron');
 const $ = require("jquery");
-const utils = require('../utils.js');
 const os = require('os');
 const path = require('node:path')
 const fs = require("node:fs");

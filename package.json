@@ -7,7 +7,10 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder"
+    "dist-auto": "electron-builder",
+    "dist-win": "electron-builder -w",
+    "dist-lin": "electron-builder -l",
+    "dist-all": "electron-builder -wl"
   },
   "repository": {
     "type": "git",
@@ -37,11 +40,13 @@
   },
   "build": {
     "appId": "pl.dcrft.dcrftlaunch",
+    "artifactName": "DragonCraft_Launcher_Alpha_${version}.${ext}",
     "dmg": {
       "title": "${productName} ${version}"
     },
     "linux": {
       "category": "Game",
+      "icon": "res/dcl4it.png",
       "target": [
         "AppImage",
         "deb"
@@ -49,7 +54,7 @@
     },
     "win": {
       "target": "NSIS",
-      "icon": "res/dcl4it.ico"
+      "icon": "res/dcl4i.ico"
     }
   }
 }
