@@ -363,6 +363,7 @@ $(document).ready(function () {
     //       DCRFT.PL HUD      //
     //                         //
 
+    // TODO View older news
     function news(i) {
         const request = new XMLHttpRequest();
         const newsTypeIcon = $(".newstypeicon")
@@ -371,7 +372,7 @@ $(document).ready(function () {
         request.open('GET', 'https://sub3.dcrft.pl/oglapi.php?id=' + i, true);
         request.onload = function () {
             const data = JSON.parse(request.responseText);
-            if (request.status < 200 || request.status > 400) utils.debug("Error loading news. HTTP status: " + request.status);
+            if (request.status < 200 || request.status > 400) debug("Error loading news. HTTP status: " + request.status);
             let desc = data[0];
             let n = 0;
             desc = desc.replace('**', (m) => {
