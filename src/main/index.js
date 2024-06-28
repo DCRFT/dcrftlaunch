@@ -206,8 +206,8 @@ $(document).ready(function () {
         let user = getCurrentUserObj();
         let version = getVersion();
 
-        let ram = getSettingEntry("ram")
-        let javapath = getSettingEntry("javapath")
+        let ram = getSettingEntry("ram");
+        let javapath = getSettingEntry("javapath");
 
         if(checkUserUI(user)) return;
 
@@ -693,7 +693,6 @@ $(document).ready(function () {
 
     function launchGame(user, version, ram, javapath) {
 
-        // TODO investiage 'ram' argument
         hideVersionList();
         hideUserList();
 
@@ -708,8 +707,8 @@ $(document).ready(function () {
                     type: version.type
                 },
                 memory: {
-                    min: getSettingEntry("ram:min") + "G",
-                    max: getSettingEntry("ram:max") + "G"
+                    min: ram.min + "G",
+                    max: ram.max + "G"
                 },
                 javaPath: await jmgr.use(jmgrVer),
             }
