@@ -582,11 +582,13 @@ $(document).ready(function () {
     }
 
     function removeUser(username) {
-        // TODO
+        nconf.clear("profile:history:" + username);
+        nconf.save();
+        loadUserList();
     }
 
-    function selectUser(user, click) {
-        const userFromHistory = getUserFromHistory(user)
+    function selectUser(userName, click) {
+        const userFromHistory = getUserFromHistory(userName)
         nconf.set("profile:current", userFromHistory);
         if (userFromHistory.auth) tryRefreshToken(userFromHistory);
         nconf.save();
@@ -607,19 +609,36 @@ $(document).ready(function () {
         return history;
     }
 
-    function getUserFromHistory(user) {
-        let userFromHistory = nconf.get("profile:history:" + user);
+    function getUserFromHistory(userName) {
+        let userFromHistory = nconf.get("profile:history:" + userName);
         if (userFromHistory === undefined) userFromHistory = {};
         return userFromHistory;
     }
 
     function addUserListHandler() {
-        const userSelectElement = $("li.user-p-list-element");
+
+        const userSelectElement = $("span.user-p-list-element");
+        const userDeleteElement = $("div.p-list-element-delete");
+
         userSelectElement.click(function () {
             let user = $(this).text();
             debug("Selected user: " + user);
             selectUser(user, true);
-        })
+        });
+
+        userDeleteElement.click(function () {
+            const username = $(this).data("username");
+
+            if(getCurrentUserObj().username === username) {
+                showErrorMessage("Nie można usunąć konta, które jest aktualnie wybrane.")
+                debug("Tried removing currently logged user: " + username);
+            } else {
+                removeUser(username);
+                debug("Deleting user: " + username);
+            }
+            hideUserList();
+        });
+
     }
 
     function loadUserList() {
@@ -629,7 +648,10 @@ $(document).ready(function () {
         container.empty();
 
         $.each(history, function (user) {
-            container.append(`<li class="p-list-element user-p-list-element">${user}</li>`);
+            container.append(`<li class="p-list-element">
+                                <span class="user-p-list-element">${user}</span>
+                                <div class="p-list-element-delete" data-username=${user}><i class="fa-solid fa-x"></i></div>
+                              </li>`);
         });
         addUserListHandler();
 
