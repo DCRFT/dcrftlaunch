@@ -22,6 +22,7 @@
     <div class="tb-content">
         <div class="tb-version-cont">dragoncraft launcher alpha</div>
         <div class="tb-bug-cont tb-btn"><i class="fa-solid fa-bug"></i></div>
+        <div class="tb-info-cont tb-btn"><i class="fa-solid fa-info-circle"></i></div>
         <div class="tb-devtools-cont tb-btn"><i class="fas fa-code"></i></div>
         <div class="tb-settings-cont tb-btn"><i class="fas fa-cog"></i></div>
         <div class="tb-close-cont tb-btn"><i class="fas fa-times"></i></div>
@@ -145,7 +146,7 @@
             </div>
         </div>
 
-        <!--
+        <!-- // TODO: Future feature: custom Java path
         <div class="setting java-setting">
             <label for="java-path">Java (dla zaawansowanych użytkowników)</label>
             <div class="java-buttons">
@@ -192,6 +193,32 @@
     <div class="error-container">
         <div class="error-text"></div>
     </div>
+</div>
+
+<div class="info-screen">
+    <div class="info-title"><span class="logo-dragon">dragon</span><span class="logo-craft">craft</span> launcher</div>
+
+    <div class="info-container">
+        <div class="info-text">
+            <div class="info-text-element info-text-header">Launcher Minecraft dla DCRFT.PL</div>
+
+            <div class="info-text-element info-text-desc">Uwaga. Launcher jest we wczesnej fazie rozwoju. Mogą występować błędy i niedociągnięcia. Prosimy o ich zgłaszanie!</div>
+
+            <div class="info-text-element info-src-lib"><pre>
+            Kod źródłowy: <a href="https://github.com/DCRFT/dcrftlaunch" target="_blank">https://github.com/DCRFT/dcrftlaunch</a>
+
+            Wykorzystano m. in. biblioteki:
+                MinecraftLauncher-core: <a href="https://github.com/Pierce01/MinecraftLauncher-core" target="_blank">https://github.com/Pierce01/MinecraftLauncher-core</a>
+                MSMC: <a href="https://github.com/Hanro50/MSMC" target="_blank">https://github.com/Hanro50/MSMC</a>
+                javamgr: <a href="https://github.com/HerozDotExe/javamgr" target="_blank">https://github.com/HerozDotExe/javamgr</a>
+            </pre>
+            </div>
+        </div>
+        <div class="info-buttons footer-buttons">
+            <button type="button" class="btn info-btn cancel-btn close-btn" id="close-info">Zamknij</button>
+        </div>
+    </div>
+
 </div>
 
 </body>

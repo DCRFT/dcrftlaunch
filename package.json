@@ -1,7 +1,7 @@
 {
   "name": "dcrftlaunch",
   "author": "nicknickeryt <nick4nicker@gmail.com>",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Yet another Minecraft launcher.",
   "main": "src/main/main.js",
   "license": "UNLICENSED",

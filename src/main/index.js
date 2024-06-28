@@ -85,6 +85,7 @@ $(document).ready(function () {
 
     const settingsWin = $(".settings-screen");
     const loginWin = $(".login-screen");
+    const infoWin = $(".info-screen");
 
     const applySettings = $("#apply-settings");
     const closeButton = $(".close-btn");
@@ -121,6 +122,9 @@ $(document).ready(function () {
 
     $('.tb-bug-cont').click(function () {
         require("electron").shell.openExternal(packageJson.bugs.url);
+    });
+    $('.tb-info-cont').click(function () {
+        infoWin.addClass("shown");
     });
     $('.tb-devtools-cont').click(function () {
         ipcRenderer.send('devtools');
@@ -279,8 +283,9 @@ $(document).ready(function () {
     //                         //
 
     closeButton.click(function () {
-        settingsWin.hide()
-        loginWin.hide()
+        settingsWin.hide();
+        loginWin.hide();
+        infoWin.removeClass("shown");
     });
 
     applySettings.click(function () {
