@@ -5,6 +5,8 @@ const {dialog} = require('electron');
 const {Auth} = require("msmc");
 const authManager = new Auth("select_account");
 
+let isCloseBehaviourEnabled = false;
+
 function createWindow() {
     const mainWindow = new BrowserWindow({
         frame: false,
@@ -41,10 +43,11 @@ function createWindow() {
     ipcMain.on('toggleLauncher', (event, launcherBehaviour) => {
         switch (launcherBehaviour) {
             case "show":
-                mainWindow.show();
+                isCloseBehaviourEnabled ? app.quit() : mainWindow.show();
                 break;
             case "close":
-                mainWindow.close();
+                isCloseBehaviourEnabled = true;
+                mainWindow.hide();
                 break;
             case "hide":
                 mainWindow.hide();
@@ -81,5 +84,5 @@ app.whenReady().then(() => {
 })
 
 app.on('window-all-closed', function () {
-    if (process.platform !== 'darwin') app.quit()
+    if (process.platform !== 'darwin' && !isCloseBehaviourEnabled) app.quit()
 })
