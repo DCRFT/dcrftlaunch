@@ -22,7 +22,6 @@
     "Minecraft"
   ],
   "devDependencies": {
-    "@electron/fuses": "^1.8.0",
     "electron": "^31.1.0",
     "electron-builder": "^24.13.3"
   },
@@ -34,9 +33,7 @@
     "minecraft-launcher-core": "^3.18.1",
     "msmc": "^5.0.5",
     "nconf": "^0.12.1",
-    "os": "^0.1.2",
-    "remote": "^0.2.6",
-    "yaml": "^2.4.5"
+    "os": "^0.1.2"
   },
   "build": {
     "appId": "pl.dcrft.dcrftlaunch",

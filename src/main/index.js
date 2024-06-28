@@ -1,10 +1,10 @@
-const {ipcRenderer} = require('electron');
+const {ipcRenderer, shell} = require('electron');
 const $ = require("jquery");
 const utils = require('../utils.js');
 const os = require('os');
 const path = require('node:path')
 const fs = require("node:fs");
-const { debug, setRPC, loadRPC} = require("../utils");
+const {debug, setRPC, loadRPC} = require("../utils");
 const nconf = require("nconf")
 const {JavaManager} = require("../../lib/javamgr/index.js");
 
@@ -53,7 +53,7 @@ function logoAnim(time, exit) {
             loader.addClass("no-transition");
         }
         titleBarContainer.addClass("background");
-        bigLogo.removeClass("normal").addClass("splash-two");
+        bigLogo.removeClass("normal").removeClass("clickable").addClass("splash-two");
         loader.removeClass("hidden").addClass("splash");
 
         setTimeout(function () {
@@ -75,7 +75,7 @@ function logoAnim(time, exit) {
             titleBarContainer.removeClass("background");
         }, 1250)
         setTimeout(function () {
-            bigLogo.removeClass("in").addClass("out");
+            bigLogo.removeClass("in").addClass("out").addClass("clickable");
         }, 1500)
 
     }, time);
@@ -120,8 +120,11 @@ $(document).ready(function () {
     const errorScreen = $(".error-screen");
     const errorText = $(".error-text");
 
+    $('.tb-discord-cont').click(function () {
+        shell.openExternal("https://discord.gg/7pPNbUU");
+    });
     $('.tb-bug-cont').click(function () {
-        require("electron").shell.openExternal(packageJson.bugs.url);
+        shell.openExternal(packageJson.bugs.url);
     });
     $('.tb-info-cont').click(function () {
         infoWin.addClass("shown");
@@ -188,7 +191,9 @@ $(document).ready(function () {
         });
     });
 
-    pTopContainer.click(function () { toggleUserList(); });
+    pTopContainer.click(function () {
+        toggleUserList();
+    });
 
     function toggleUserList() {
         userBadgeHead.toggleClass('clicked');
@@ -213,7 +218,7 @@ $(document).ready(function () {
         let ram = getSettingEntry("ram");
         let javapath = getSettingEntry("javapath");
 
-        if(checkUserUI(user)) return;
+        if (checkUserUI(user)) return;
 
         debug("Trying to launch game version " + version.id);
         launchGame(user, version, ram, javapath);
@@ -425,7 +430,9 @@ $(document).ready(function () {
     //     VERSION MANAGER     //
     //                         //
 
-    versionMenuButton.click(function () { toggleVersionList(); });
+    versionMenuButton.click(function () {
+        toggleVersionList();
+    });
 
     function hideVersionList() {
         versionList.addClass("hidden");
@@ -634,7 +641,7 @@ $(document).ready(function () {
         userDeleteElement.click(function () {
             const username = $(this).data("username");
 
-            if(getCurrentUserObj().username === username) {
+            if (getCurrentUserObj().username === username) {
                 showErrorMessage("Nie można usunąć konta, które jest aktualnie wybrane.")
                 debug("Tried removing currently logged user: " + username);
             } else {
@@ -655,7 +662,7 @@ $(document).ready(function () {
         $.each(history, function (user) {
             container.append(`<li class="p-list-element">
                                 <span class="user-p-list-element">${user}</span>
-                                <div class="p-list-element-delete" data-username=${user}><i class="fa-solid fa-x"></i></div>
+                                <div class="p-list-element-delete" data-username=${user}><i class="fa-solid fa-xmark"></i></div>
                               </li>`);
         });
         addUserListHandler();
@@ -787,6 +794,10 @@ $(document).ready(function () {
             errorScreen.fadeOut();
         }, 1500);
     }
+
+    $('.big-logo.logo-image').click(function () {
+        shell.openExternal("https://dcrft.pl");
+    });
 
     //                         //
     //          INIT           //
