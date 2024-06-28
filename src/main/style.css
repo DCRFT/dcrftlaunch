@@ -92,7 +92,7 @@ body {
     -webkit-app-region: no-drag;
 }
 
-.tb-btn {
+.tb-btn, .tb-version-cont {
     height: 100%;
     padding: 15px;
     font-size: 20px;
