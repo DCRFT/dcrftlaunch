@@ -1,13 +1,4 @@
 /* DEFINES */
-@font-face {
-    font-family: 'Roboto Mono';
-    src: url('../../res/fonts/Roboto_Mono/RobotoMono-VariableFont_wght.ttf');
-}
-
-@font-face {
-    font-family: 'UniSans';
-    src: url('../../res/fonts/UniSans/unisans.otf');
-}
 
 @font-face {
     font-family: 'TexGyre';

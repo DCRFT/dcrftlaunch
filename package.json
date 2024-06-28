@@ -1,7 +1,7 @@
 {
   "name": "DragonCraftLauncher",
   "author": "nicknickeryt <nick4nicker@gmail.com>",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Launcher Minecraft dla DCRFT.PL",
   "main": "src/main/main.js",
   "license": "UNLICENSED",
