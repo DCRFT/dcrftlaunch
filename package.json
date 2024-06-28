@@ -1,8 +1,8 @@
 {
-  "name": "dcrftlaunch",
+  "name": "DragonCraftLauncher",
   "author": "nicknickeryt <nick4nicker@gmail.com>",
   "version": "0.2.4",
-  "description": "Yet another Minecraft launcher.",
+  "description": "Launcher Minecraft dla DCRFT.PL",
   "main": "src/main/main.js",
   "license": "UNLICENSED",
   "scripts": {
@@ -53,8 +53,14 @@
       ]
     },
     "win": {
-      "target": "NSIS",
+      "target": "nsis-web",
       "icon": "res/dcl4i.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerLanguages": "pl_PL",
+      "shortcutName": "DragonCraft Launcher"
     }
   }
 }
