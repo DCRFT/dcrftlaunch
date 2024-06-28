@@ -1,8 +1,11 @@
 # DragonCraft Launcher
-### Launcher Minecrafta dla DCRFT.PL
-⚠️ Launcher jest w ciągłym rozwoju i nie powinien być używany jako główny launcher. Prosimy o zgłaszanie wszelkich błędów.\
-\
-Co potrafi DragonCraft Launcher? Wszystko to, co podstawowy launcher Minecraft z kilkoma dodatkami:\
+### Launcher Minecraft dla DCRFT.PL
+
+![dcrftlaunch-screenshot](https://github.com/DCRFT/dcrftlaunch/blob/master/images/img.png?raw=true)
+
+⚠️ Launcher jest w ciągłym rozwoju i nie powinien być używany jako główny launcher. Prosimy o zgłaszanie wszelkich błędów.
+
+#### Co potrafi DragonCraft Launcher? Wszystko to, co podstawowy launcher Minecraft z kilkoma dodatkami:
 • obsługuje wszystkie publicznie dostępne wersje Minecraft,\
 • pozwala na grę z logowaniem do Microsoft oraz offline,\
 • obsługuje wiele kont naraz,\
