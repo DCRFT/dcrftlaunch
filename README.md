@@ -19,4 +19,5 @@ Launcher został stworzony dzięki wspaniałym bibliotekom:\
 • [javamgr](https://github.com/HerozDotExe/javamgr)\
 • [DiscordRPC](https://github.com/discordjs/RPC)\
 \
-Wszelkie pomysły, zgłoszenia i pull requesty są mile widziane ❤️
+Wszelkie pomysły, zgłoszenia i pull requesty są mile widziane ❤️\
+[<img src='https://github.com/DCRFT/dcrftlaunch/blob/master/images/download.png?raw=true' width=400>](https://github.com/DCRFT/dcrftlaunch/releases/latest)
