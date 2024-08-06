@@ -468,6 +468,7 @@ $(document).ready(function () {
             selectGameVersion(getVersionObjFromListItem($(this)));
             versionMenuButton.click();
             $(".menu-label").text("Minecraft " + $(this).data("id"));
+            updateVersionBadgeIcon($(this).data("id").toString(), $(this).data("type"))
         });
 
     }
@@ -492,12 +493,25 @@ $(document).ready(function () {
 
     $('#alpha-filter, #beta-filter, #snapshot-filter').on('change', filterVersions);
 
+    function updateVersionBadgeIcon(versionId, versionType) {
+        var versionBadgeIcon = $(".menu-avatar");
+        if(versionId.includes("fabric"))
+            versionBadgeIcon.attr('src', "../../res/fabricmc.png")
+        else if (versionType.includes("old_"))
+            versionBadgeIcon.attr('src', "../../res/old_cobble.png")
+        else if (versionId.includes("cmpack_1.8.8"))
+            versionBadgeIcon.attr('src', "../../res/cmclient.png")
+        else
+            versionBadgeIcon.attr('src', "../../res/grass.png")
+    }
 
     function loadVersionBadge() {
         let version = nconf.get("version");
         if (version == null) version = getVersionObjFromListItem($(".menu-list-item"));
         selectGameVersion(version);
         $(".menu-label").text("Minecraft " + version.id);
+        updateVersionBadgeIcon(version.id.toString(), version.type);
+        
     }
 
     function loadVersionList() {
@@ -541,8 +555,20 @@ $(document).ready(function () {
             else if (custom) verid = y.assets;
             else verid = y.id;
 
+            var versionImageSrc = "../../res/grass.png";
+
+            if(y.id.includes("fabric"))
+                versionImageSrc = "../../res/fabricmc.png";
+            else if (y.type.includes("old_"))
+                versionImageSrc = "../../res/old_cobble.png";
+            else if (y.id.includes("cmpack_1.8.8"))
+                versionImageSrc = "../../res/cmclient.png";
+
             $('#menu-list-container').append(`
-            <div class="menu-list-item" data-custom="${custom}" data-inherit="${inh}" data-id="${y.id}" data-type="${y.type}" data-verid="${verid}">${y.id}</div>`);
+            <div class="menu-list-item" data-custom="${custom}" data-inherit="${inh}" data-id="${y.id}" data-type="${y.type}" data-verid="${verid}">
+                <img class="menu-list-item-image" src=${versionImageSrc}>
+                <span>${y.id}</span>
+            </div>`);
         });
         filterVersions();
         addVersionListHandler();
