@@ -400,7 +400,7 @@ body {
 
 .big-logo.logo-image.clickable:hover {
     transform: scale(1.2);
-    filter: drop-shadow(0px 0px 50px var(--yellow-dcrft)) brightness(1.2) grayscale(0.4) !important;
+    filter: drop-shadow(0px 0px 50px var(--yellow-dcrft)) brightness(1.2) grayscale(0.2) !important;
 }
 
 .no-transition {
@@ -445,7 +445,7 @@ body {
 
 .big-logo.drop {
     transition: none !important;
-    filter: drop-shadow(0px 0px 50px var(--yellow-dcrft)) brightness(1.2) grayscale(0.4) !important;
+    filter: drop-shadow(0px 0px 50px var(--yellow-dcrft)) brightness(1.2) grayscale(0.2) !important;
 }
 
 .loader-background.hidden {
