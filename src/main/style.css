@@ -665,8 +665,6 @@ body {
 
 .menu-list-item:hover {
     background: #c64001;
-    /* background: var(--gradient-dcrft); */
-    /* border-radius: 10px; */
 }
 
 .menu-list-item-image {
