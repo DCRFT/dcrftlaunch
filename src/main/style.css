@@ -697,6 +697,15 @@ body {
     transform: translateY(2px);
 }
 
+.dev-warning {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 10px;
+    color: #fff;
+    font-family: 'TexGyre';
+    text-shadow: 1px 1px 0px black;
+}
 
 /* SETTINGS SCREEN */
 
