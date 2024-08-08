@@ -777,6 +777,8 @@ $(document).ready(function () {
             });
 
             launcher.on('close', () => {
+                news(newsId);
+                loadServerStatus();
                 logoAnim(0, true);
                 hideProgress();
                 playButton.removeClass("hidden");
