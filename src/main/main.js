@@ -59,7 +59,7 @@ function createWindow() {
 
     ipcMain.handle("mslogin", async () => {
         try {
-            const xboxManager = await authManager.launch("raw");
+            const xboxManager = await authManager.launch("electron");
             const token = await xboxManager.getMinecraft();
             return {
                 token: token,
