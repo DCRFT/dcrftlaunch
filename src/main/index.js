@@ -1,15 +1,15 @@
-const {ipcRenderer, shell} = require('electron');
+const { ipcRenderer, shell } = require('electron');
 const $ = require("jquery");
 const os = require('os');
 const path = require('node:path')
 const fs = require("node:fs");
-const {debug, setRPC, loadRPC} = require("../utils");
+const { debug, setRPC, loadRPC } = require("../utils");
 const nconf = require("nconf")
-const {JavaManager} = require("../../lib/javamgr/index.js");
+const { JavaManager } = require("../../lib/javamgr/index.js");
 
-const {Client, Authenticator} = require('minecraft-launcher-core');
+const { Client, Authenticator } = require('minecraft-launcher-core');
 const launcher = new Client();
-const {Auth} = require("msmc");
+const { Auth } = require("msmc");
 
 
 // Global variables
@@ -207,7 +207,7 @@ $(document).ready(function () {
     }
 
 
-// TODO ERROR HANDLING
+    // TODO ERROR HANDLING
     playButton.click(function () {
         playButton.addClass("hidden");
 
@@ -421,7 +421,7 @@ $(document).ready(function () {
     }
 
     function loadConfig() {
-        nconf.file({file: path.join(config_root, 'dcrftlaunch.json')});
+        nconf.file({ file: path.join(config_root, 'dcrftlaunch.json') });
         nconf.load();
         nconf.save();
     }
@@ -495,7 +495,7 @@ $(document).ready(function () {
 
     function updateVersionBadgeIcon(versionId, versionType) {
         var versionBadgeIcon = $(".menu-avatar");
-        if(versionId.includes("fabric"))
+        if (versionId.includes("fabric"))
             versionBadgeIcon.attr('src', "../../res/fabricmc.png")
         else if (versionType.includes("old_"))
             versionBadgeIcon.attr('src', "../../res/old_cobble.png")
@@ -511,7 +511,7 @@ $(document).ready(function () {
         selectGameVersion(version);
         $(".menu-label").text("Minecraft " + version.id);
         updateVersionBadgeIcon(version.id.toString(), version.type);
-        
+
     }
 
     function loadVersionList() {
@@ -532,7 +532,10 @@ $(document).ready(function () {
                     files.forEach(json => {
                         if (path.extname(json) === ".json") {
                             $.getJSON(path.join(dir, file, json), function (data) {
-                                if ((data.mainClass !== "net.minecraft.client.main.Main" && data.mainClass !== "net.minecraft.launchwrapper.Launch" && data.mainClass != null)) vList.push(data);
+                                if ((data.mainClass !== "net.minecraft.client.main.Main" || data.inheritsFrom != null)
+                                    && (data.mainClass !== "net.minecraft.launchwrapper.Launch" || data.inheritsFrom != null)
+                                    && data.mainClass != null)
+                                    vList.push(data);
                             });
                         }
                     });
@@ -543,7 +546,7 @@ $(document).ready(function () {
         vList.forEach(y => {
             let custom = false;
             let inh = null;
-            if ((y.inheritsFrom != null && y.assets != null) || (y.mainClass !== "net.minecraft.client.main.Main" && y.mainClass !== "net.minecraft.launchwrapper.Launch" && y.mainClass != null)) {
+            if ((y.inheritsFrom != null) || (y.mainClass !== "net.minecraft.client.main.Main" && y.mainClass !== "net.minecraft.launchwrapper.Launch" && y.mainClass != null)) {
                 if (y.type !== "old_alpha" && y.type !== "old_beta") {
                     custom = true
                     inh = y.inheritsFrom;
@@ -557,7 +560,7 @@ $(document).ready(function () {
 
             var versionImageSrc = "../../res/grass.png";
 
-            if(y.id.includes("fabric"))
+            if (y.id.includes("fabric"))
                 versionImageSrc = "../../res/fabricmc.png";
             else if (y.type.includes("old_"))
                 versionImageSrc = "../../res/old_cobble.png";
@@ -607,7 +610,7 @@ $(document).ready(function () {
         let history = getHistory();
 
         if (history[user] === undefined) {
-            history[user] = {username: user, type: type};
+            history[user] = { username: user, type: type };
             if (auth) history[user].auth = auth;
         }
 
