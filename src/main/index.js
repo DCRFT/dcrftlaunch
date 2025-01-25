@@ -18,6 +18,8 @@ let root, config_root, jmgr = null;
 const authManager = new Auth("login");
 const packageJson = require("../../package.json");
 
+var debugModeEnabled = false;
+
 
 //                         //
 //  DUMMY PROFILE HELPER   //
@@ -42,7 +44,7 @@ function createDummyProfileFile() {
 //     SPLASH ANIMATION    //
 //                         //
 
-function logoAnim(time, exit) {
+function logoAnim(time, exit, startup) {
     const bigLogo = $('.big-logo');
     const loader = $('.loader-background');
     const titleBarContainer = $(".tb-container");
@@ -51,6 +53,9 @@ function logoAnim(time, exit) {
             bigLogo.addClass("no-transition");
             loader.addClass("no-transition");
         }
+        if (startup)
+            titleBarContainer.addClass("no-transition");
+
         titleBarContainer.addClass("background");
         bigLogo.removeClass("normal").removeClass("clickable").addClass("splash-two");
         loader.removeClass("hidden").addClass("splash");
@@ -61,6 +66,8 @@ function logoAnim(time, exit) {
                 bigLogo.removeClass("no-transition");
                 loader.removeClass("no-transition");
             }
+            if (startup)
+                titleBarContainer.removeClass("no-transition");
         }, 500)
         setTimeout(function () {
             bigLogo.addClass("normal").removeClass("splash").removeClass("splash-two");
@@ -88,6 +95,7 @@ $(document).ready(function () {
 
     const applySettings = $("#apply-settings");
     const closeButton = $(".close-btn");
+    const devtoolsButton = $(".tb-devtools-cont");
 
     const launcherBehaviour = $('#launcher-behaviour');
     const ramMinSlider = $('#ram-min');
@@ -128,7 +136,7 @@ $(document).ready(function () {
     $('.tb-info-cont').click(function () {
         infoWin.addClass("shown");
     });
-    $('.tb-devtools-cont').click(function () {
+    devtoolsButton.click(function () {
         ipcRenderer.send('devtools');
     });
     $('.tb-settings-cont').click(function () {
@@ -738,7 +746,7 @@ $(document).ready(function () {
         hideUserList();
 
         var jmgrVer = /[a-zA-Z]/.test(version.verid) ? "1.5" : version.verid + "";
-        if(version.type == "snapshot") jmgrVer = version.verid;
+        if (version.type == "snapshot") jmgrVer = version.verid;
 
         (async () => {
             let opts = {
@@ -836,6 +844,12 @@ $(document).ready(function () {
     //                         //
 
     function launcherInit() {
+        if (process.env.DCRFTLAUNCH_DEBUG === '1') {
+            ipcRenderer.send('debugMode');
+            debugModeEnabled = true;
+            devtoolsButton.removeClass("d-none");
+        }
+
         loadLauncherVersion();
         loadRPC();
         initFiles();
@@ -852,7 +866,7 @@ $(document).ready(function () {
         loadJmgr();
         news(newsId);
         loadServerStatus();
-        logoAnim(300, false);
+        logoAnim(300, false, true);
     }
 
     //                         //
@@ -862,4 +876,3 @@ $(document).ready(function () {
     launcherInit();
 
 });
-

@@ -7,6 +7,8 @@ const authManager = new Auth("select_account");
 
 let isCloseBehaviourEnabled = false;
 
+var debugModeEnabled = false;
+
 function createWindow() {
     const mainWindow = new BrowserWindow({
         frame: false,
@@ -26,8 +28,13 @@ function createWindow() {
         utils.debug("Closing app via close button");
         app.quit();
     })
+    
     ipcMain.on('devtools', () => {
-        mainWindow.webContents.openDevTools()
+        mainWindow.webContents.openDevTools();
+    })
+
+    ipcMain.on('debugMode', () => {
+        debugModeEnabled = true;
     })
 
     ipcMain.handle("select-java", async () => {
@@ -37,7 +44,7 @@ function createWindow() {
     })
 
     ipcMain.on('debug', (event, debugText) => {
-        console.log(debugText);
+        if(debugModeEnabled) console.log(debugText);
     });
 
     ipcMain.on('toggleLauncher', (event, launcherBehaviour) => {

@@ -11,7 +11,11 @@
 • obsługuje wiele kont naraz,\
 • ma podstawowe ustawienia (przydzielaniu RAMu, zachowanie launchera),\
 • pokazuje najnowsze wiadomości z DCRFT.PL oraz liczbę graczy na serwerze,\
-• pokazuje status gry na Discordzie.\
+• pokazuje status gry na Discordzie.
+
+#### Dla deweloperów:
+Aby włączyć tryb debugowania launchera (debugowanie w konsoli, możliwość otwarcia narzędzi deweloperskich), należy ustawić zmienną środowiskową:\
+`DCRFTLAUNCH_DEBUG=1`\
 \
 Launcher został stworzony dzięki wspaniałym bibliotekom:\
 • [MinecraftLauncher-core](https://github.com/Pierce01/MinecraftLauncher-core)\
