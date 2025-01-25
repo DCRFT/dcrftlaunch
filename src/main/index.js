@@ -734,7 +734,8 @@ $(document).ready(function () {
         hideVersionList();
         hideUserList();
 
-        const jmgrVer = /[a-zA-Z]/.test(version.verid) ? "1.5" : version.verid + "";
+        var jmgrVer = /[a-zA-Z]/.test(version.verid) ? "1.5" : version.verid + "";
+        if(version.type == "snapshot") jmgrVer = version.verid;
 
         (async () => {
             let opts = {
