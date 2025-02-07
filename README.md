@@ -9,7 +9,7 @@
 • obsługuje wszystkie publicznie dostępne wersje Minecraft,\
 • pozwala na grę z logowaniem do Microsoft oraz offline,\
 • obsługuje wiele kont naraz,\
-• ma podstawowe ustawienia (przydzielaniu RAMu, zachowanie launchera),\
+• ma podstawowe ustawienia (przydzielanie RAMu, zachowanie launchera),\
 • pokazuje najnowsze wiadomości z DCRFT.PL oraz liczbę graczy na serwerze,\
 • pokazuje status gry na Discordzie.
 
