@@ -239,8 +239,7 @@ body {
     flex-direction: column;
     width: 100%;
     height: auto;
-    padding-left: 0;
-    padding-bottom: 0;
+    padding: 10px;
     margin-bottom: 0;
 }
 
@@ -248,7 +247,7 @@ body {
     display: flex;
     justify-content: space-between;
     height: 100%;
-    background: var(--orange-dcrft);
+    background: var(--yellow-dcrft);
     align-items: center;
     color: #fff;
     font-family: 'TexGyre', serif;
@@ -257,6 +256,10 @@ body {
     width: 100%;
     cursor: pointer;
     transition: .1s ease-out;
+    border: 2px solid var(--dark-dcrft);
+    border-radius: 10px;
+    margin-top: 7px;
+    padding: 5px;
 }
 
 .user-p-list-element {
@@ -265,10 +268,17 @@ body {
     width: 100%;
 }
 
+.user-p-list-head {
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px #4f4f4f;
+    margin-left: 5px;
+}
+
 .p-list-element-delete {
     height: 28px;
     width: 32px;
-    display: none;
+    display: flex;
+    opacity: 0;
     border-radius: 1000px;
     padding: 5px;
     color: darkred;
@@ -287,13 +297,15 @@ body {
 }
 
 .p-list-element:hover .p-list-element-delete {
-    display: flex;
+    opacity: 1;
 }
 
 .p-list-element.p-add-account {
     border-radius: 10px;
     background: var(--gradient-dcrft);
     padding: 15px;
+    margin-top: 1px;
+    justify-content: center;
 }
 
 .p-list-element:hover, .p-list-element.p-add-account:hover {
@@ -305,17 +317,6 @@ body {
     transition: none;
     filter: brightness(0.5);
 }
-
-
-.p-list-element:last-child {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.p-list-element:not(:last-child) {
-    border-bottom: 1px solid white;
-}
-
 
 .boxes {
     display: flex;
@@ -342,6 +343,7 @@ body {
     border: solid 2px var(--dark-dcrft);
     margin-bottom: 10px;
     box-shadow: 1px 1px 3px #262626;
+    backdrop-filter: blur(10px);
 }
 
 .news-icons {
@@ -373,6 +375,7 @@ body {
     justify-content: center;
     width: fit-content;
     box-shadow: 1px 1px 3px #262626;
+    backdrop-filter: blur(10px);
 }
 
 .dcrftdesc {
@@ -396,6 +399,10 @@ body {
     width: 23vw;
     height: auto;
     cursor: pointer;
+}
+
+.big-logo.logo-image.normal {
+    z-index: 4;
 }
 
 .big-logo.logo-image.clickable:hover {
@@ -589,12 +596,13 @@ body {
     z-index: 2;
     font-family: 'TexGyre', serif;
     transition: all 0.1s ease-in-out;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .menu-container.shown {
     z-index: 4;
     background-color: var(--orange-dcrft);
-    border-radius: 10px;
 }
 
 .menu-header {
@@ -656,11 +664,14 @@ body {
     font-size: 17px;
     text-shadow: 1px 1px 0px black;
     color: #ffffff;
-    border-bottom: 1px solid var(--dark-dcrft);
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    border-radius: 10px;
+    margin-top: 5px;
+    border: 2px solid var(--dark-dcrft);
+    background: var(--yellow-dcrft);
 }
 
 .menu-list-item:hover {

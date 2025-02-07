@@ -134,12 +134,20 @@ $(document).ready(function () {
         shell.openExternal(packageJson.bugs.url);
     });
     $('.tb-info-cont').click(function () {
+        settingsWin.hide();
+        hideVersionList();
+        loginWin.hide();
+
         infoWin.addClass("shown");
     });
     devtoolsButton.click(function () {
         ipcRenderer.send('devtools');
     });
     $('.tb-settings-cont').click(function () {
+        infoWin.removeClass("shown");
+        hideVersionList();
+        loginWin.hide();
+
         showSettings();
     });
     $('.tb-close-cont').click(function () {
@@ -698,6 +706,7 @@ $(document).ready(function () {
 
         $.each(history, function (user) {
             container.append(`<li class="p-list-element">
+                                <img class="user-p-list-head" src="https://mc-heads.net/avatar/${user}/48"></img>
                                 <span class="user-p-list-element">${user}</span>
                                 <div class="p-list-element-delete" data-username=${user}><i class="fa-solid fa-xmark"></i></div>
                               </li>`);
