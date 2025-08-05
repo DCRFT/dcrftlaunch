@@ -97,7 +97,7 @@ body {
     cursor: pointer;
     transition: .15s;
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 .tb-btn:hover {
@@ -159,7 +159,7 @@ body {
 
 
 .head {
-    border-radius: 10px;
+    border-radius: 20px;
     background-size: cover;
     width: 80px;
     height: 80px;
@@ -188,7 +188,7 @@ body {
     padding: 20px;
     height: 80px;
     border: 5px solid #512200;
-    border-radius: 10px;
+    border-radius: 20px;
     transition: 0.2s ease;
     background: var(--gradient-dcrft);
 }
@@ -223,7 +223,7 @@ body {
     background-color: var(--orange-dcrft);
     box-shadow: 0 0 10px black;
     transition: 0.2s ease;
-    border-radius: 10px;
+    border-radius: 20px;
     opacity: 0;
     transform: translateY(-50%);
 }
@@ -257,7 +257,7 @@ body {
     cursor: pointer;
     transition: .1s ease-out;
     border: 2px solid var(--dark-dcrft);
-    border-radius: 10px;
+    border-radius: 20px;
     margin-top: 7px;
     padding: 5px;
 }
@@ -283,7 +283,7 @@ body {
     padding: 5px;
     color: darkred;
     font-weight: bold;
-    transition: .3s ease-out;
+    transition: .15s ease-out;
     margin-right: 15px;
     justify-content: center;
     align-items: center;
@@ -301,7 +301,7 @@ body {
 }
 
 .p-list-element.p-add-account {
-    border-radius: 10px;
+    border-radius: 20px;
     background: var(--gradient-dcrft);
     padding: 15px;
     margin-top: 1px;
@@ -324,7 +324,7 @@ body {
     position: absolute;
     font-family: 'TexGyre', serif;
     color: white;
-    border-radius: 5px;
+    border-radius: 20px;
     padding: 2vw;
     right: 1vw;
     top: 7vh;
@@ -335,7 +335,7 @@ body {
 .news {
     color: white;
     background: rgb(239 146 0 / 30%);
-    border-radius: 5px;
+    border-radius: 20px;
     padding: 2vw;
     right: 1vw;
     top: 7vh;
@@ -363,7 +363,7 @@ body {
 .players {
     color: white;
     background: rgb(239 146 0 / 30%);
-    border-radius: 5px;
+    border-radius: 20px;
     padding: 1vw;
     right: 1vw;
     top: 7vh;
@@ -495,7 +495,7 @@ body {
     margin-top: 10px;
     background: var(--dark-dcrft);
     box-sizing: border-box;
-    border-radius: 5px;
+    border-radius: 20px;
     transition: .1s;
     display: none;
 }
@@ -503,7 +503,7 @@ body {
 .ls-loading-bar {
     width: 0;
     height: 10px;
-    border-radius: 5px;
+    border-radius: 20px;
     background: var(--gradient-dcrft);
     box-sizing: border-box;
     position: relative;
@@ -557,7 +557,7 @@ body {
     color: #ffffff;
     background: var(--gradient-dcrft);
     border: 5px solid var(--dark-dcrft);
-    border-radius: 12px;
+    border-radius: 20px;
     cursor: pointer;
     text-align: center;
     box-shadow: 0 4px #af8000;
@@ -571,7 +571,7 @@ body {
     position: absolute;
     width: calc(100% + 10px);
     height: calc(100% + 10px);
-    border-radius: 10px;
+    border-radius: 20px;
     top: -5px;
     left: -5px;
     z-index: -1;
@@ -597,7 +597,7 @@ body {
     font-family: 'TexGyre', serif;
     transition: all 0.1s ease-in-out;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 .menu-container.shown {
@@ -612,7 +612,7 @@ body {
     background: var(--gradient-dcrft);
     border: 5px solid var(--dark-dcrft);
     transition: all 0.1s ease-in-out;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 .menu-avatar {
@@ -668,7 +668,7 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    border-radius: 10px;
+    border-radius: 20px;
     margin-top: 5px;
     border: 2px solid var(--dark-dcrft);
     background: var(--yellow-dcrft);
@@ -754,6 +754,7 @@ body {
     margin: 5px;
     font-family: "TexGyre", serif !important;
     font-weight: lighter;
+    border-radius: 20px !important;
 }
 
 .java-btn {
@@ -804,7 +805,7 @@ body {
     padding: 5px;
     background: var(--orange-dcrft);
     color: var(--dark-dcrft);
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
     margin: 5px;
 }
@@ -872,6 +873,7 @@ input[type="range"] {
     margin: 5px;
     font-family: "TexGyre", serif !important;
     font-weight: lighter;
+    border-radius: 20px !important;
 }
 
 
@@ -917,7 +919,7 @@ input[type="range"] {
     margin: 10px;
     padding: 15px;
     background: var(--gradient-dcrft);
-    border-radius: 10px;
+    border-radius: 20px;
     border: 5px solid var(--dark-dcrft);
 }
 
@@ -927,7 +929,7 @@ input[type="range"] {
 
 .login-btn.offline-login-btn {
     border: 5px solid var(--dark-dcrft);
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 13px;
     font-size: 24px;
     transition: .2s ease-in-out;
@@ -959,7 +961,7 @@ input[type="range"] {
     transform: translate(-50%, -50%);
     background: indianred;
     border: 5px solid var(--dark-dcrft);
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 1px 1px 5px var(--dark-dcrft);
     display: none;
 }
@@ -1032,6 +1034,7 @@ input[type="range"] {
 .info-btn {
     font-family: 'TexGyre', 'serif' !important;
     padding: 20px !important;
+    border-radius: 20px !important;
 }
 
 .info-container {
@@ -1040,4 +1043,8 @@ input[type="range"] {
     justify-content: space-evenly;
     align-items: center;
     height: 100%;
+}
+
+.tb-btn {
+    aspect-ratio: 1 / 1;
 }
