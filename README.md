@@ -7,11 +7,13 @@
 
 #### Co potrafi DragonCraft Launcher? Wszystko to, co podstawowy launcher Minecraft z kilkoma dodatkami:
 • obsługuje wszystkie publicznie dostępne wersje Minecraft,\
-• pozwala na grę z logowaniem do Microsoft oraz offline,\
+• pozwala na grę z logowaniem do Microsoft oraz offline*,\
 • obsługuje wiele kont naraz,\
 • ma podstawowe ustawienia (przydzielanie RAMu, zachowanie launchera),\
 • pokazuje najnowsze wiadomości z DCRFT.PL oraz liczbę graczy na serwerze,\
 • pokazuje status gry na Discordzie.
+
+<sup>\* Tryb offline nie ma na celu umożliwienia darmowego dostępu do gry. Używanie launchera w celu uzyskania dostępu do pełnej gry bez dokonania zakupu jest niedozwolone. DragonCraft nie popiera takich działań i zachęca do zakupu gry z oficjalnego źródła.</sup>
 
 #### Dla deweloperów:
 Aby włączyć tryb debugowania launchera (debugowanie w konsoli, możliwość otwarcia narzędzi deweloperskich), należy ustawić zmienną środowiskową:\
