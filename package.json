@@ -8,7 +8,7 @@
   "scripts": {
     "start": "electron .",
     "dist-auto": "electron-builder",
-    "dist-win": "electron-builder -w --projectVersion 0.2.8",
+    "dist-win": "electron-builder -w",
     "dist-lin": "electron-builder -l",
     "dist-all": "electron-builder -wl"
   },
